@@ -1,0 +1,19 @@
+use_frameworks!
+
+platform :ios, '10.0'
+
+target 'PopupsManager_Example' do
+  
+  #开发库
+  pod 'PopupsManager', :path => '../'
+  
+  #debug demo import
+  pod 'Masonry'
+  pod 'LookinServer', :configurations => ['Debug']
+
+  target 'PopupsManager_Tests' do
+    inherit! :search_paths
+
+    pod 'FBSnapshotTestCase'
+  end
+end

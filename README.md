@@ -1,4 +1,4 @@
-<img src=Image/title.png width=100% height=100% />
+<img src=image/title.png width=100% height=100% />
 
 [![license](https://img.shields.io/hexpm/l/plug.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 ![Pod Version](https://img.shields.io/badge/pod-v1.0.0-green.svg)

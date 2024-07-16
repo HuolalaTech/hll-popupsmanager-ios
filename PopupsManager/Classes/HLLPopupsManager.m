@@ -684,13 +684,26 @@
             if (queueCount >= 1) {
                 //如果当前移除的弹窗之前还有被覆盖的，则把之前的重新展示出来
                 NSArray *allArr = [self getPopupsFromAllPopupsWithGroupId:model.config.groupID];
-                HLLPopupModel *lastItem = allArr.lastObject;
+                HLLPopupModel *model = allArr.lastObject;
+                if (!model.popupBgView.superview) {
+                    [model.config.containerView addSubview:model.popupBgView];
+                    [model.config.containerView bringSubviewToFront:model.popupBgView];
+                    //弹窗内容自定义布局
+                    if ([model.popupObj respondsToSelector:@selector(layoutWithSuperView:)]) {
+                        [model.popupObj layoutWithSuperView:model.popupBgView];
+                    }
+                    //获取到业务中ContentView的frame
+                    [model.popupBgView layoutIfNeeded];
+                    //缓存弹窗内容的原始frame
+                    model.originalFrame = [model.popupObj supplyCustomPopupView].frame;
+                }
+
                 //开启定时器
-                if (lastItem.config.dismissDuration >= 1) {
-                    [lastItem startCountTime];
+                if (model.config.dismissDuration >= 1) {
+                    [model startCountTime];
                 }
                 //pop动画
-                [self popAnimationWithPopViewModel:lastItem isNeedAnimation:YES];
+                [self popAnimationWithPopViewModel:model isNeedAnimation:YES];
             }
         });
     }
